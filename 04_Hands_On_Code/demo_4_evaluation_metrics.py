@@ -54,64 +54,25 @@ if not GOOGLE_API_KEY:
 print("✅ API Key loaded\n")
 
 # ========================================
-# SAMPLE KNOWLEDGE BASE (Larger for better evaluation)
+# LOAD KNOWLEDGE BASE FROM FILE
 # ========================================
-print("📚 Creating knowledge base...")
+print("📚 Loading knowledge base from file...")
 
-documents = [
-    # RAG Basics
-    """RAG (Retrieval Augmented Generation) is a technique that combines information
-    retrieval with Large Language Model generation. It helps LLMs access external
-    knowledge and reduces hallucinations. RAG has three phases: Indexing, Retrieval,
-    and Generation.""",
+knowledge_file = "knowledge_base.txt"
+if not os.path.exists(knowledge_file):
+    print(f"❌ ERROR: {knowledge_file} not found!")
+    exit(1)
 
-    """RAG was introduced in 2020 by Facebook AI (now Meta). It's now used in
-    production systems at Google, Microsoft, and many startups. RAG is essential
-    for enterprise AI applications.""",
+with open(knowledge_file, 'r', encoding='utf-8') as f:
+    full_text = f.read()
 
-    # Chunking
-    """Chunking splits documents into smaller pieces. Optimal chunk size depends on
-    your use case. Typical range: 200-500 tokens. Too small loses context, too large
-    includes irrelevant information.""",
+print(f"✅ Loaded knowledge base ({len(full_text)} characters)\n")
 
-    """Advanced chunking strategies include: semantic chunking (split by meaning),
-    recursive chunking (try multiple methods), and document-aware chunking
-    (respect headers, code blocks). Overlap of 10-20% helps preserve context.""",
+# Split into sections (by double newlines) for better evaluation
+sections = [s.strip() for s in full_text.split('\n\n') if s.strip() and len(s.strip()) > 50]
 
-    # Embeddings
-    """Embeddings convert text to vectors. Similar meanings → similar vectors.
-    Gemini's text-embedding-004 creates 768-dimensional embeddings. These capture
-    semantic meaning.""",
-
-    """Embedding models are different from LLMs. Embeddings are for search (cheap, fast),
-    LLMs are for generation (expensive, slow). Use embeddings for millions of docs,
-    LLMs for answering with top-k docs.""",
-
-    # Vector Databases
-    """Vector databases optimize similarity search. Popular options: ChromaDB (simple),
-    FAISS (fast), Pinecone (cloud), Weaviate (feature-rich). They use algorithms
-    like HNSW, IVF for approximate nearest neighbors.""",
-
-    """FAISS (Facebook AI Similarity Search) can handle billions of vectors. It supports
-    GPU acceleration. ChromaDB is easier to start with for prototyping.""",
-
-    # Evaluation
-    """RAG evaluation has two parts: retrieval quality and generation quality.
-    Retrieval metrics: Precision, Recall, MRR, NDCG. Generation metrics: Faithfulness,
-    Relevance, Answer Similarity.""",
-
-    """RAGAS (RAG Assessment) framework automates evaluation. It measures: faithfulness
-    (no hallucinations), answer relevance (addresses question), context relevance
-    (retrieved docs are useful). RAGAS score ranges 0-1, higher is better.""",
-
-    # Production Tips
-    """Production RAG systems need: caching (embeddings + LLM calls), monitoring
-    (track latency, cost), A/B testing (compare chunking strategies), user feedback
-    (thumbs up/down).""",
-
-    """Cost optimization: Use smaller embedding models (text-embedding-004), cache
-    embeddings, use Gemini Flash for speed. Monitor token usage.""",
-]
+# Use multiple sections for evaluation
+documents = sections[:12]  # Take first 12 sections for diverse content
 
 # Create chunks
 text_splitter = RecursiveCharacterTextSplitter(
@@ -146,7 +107,7 @@ print("📊 PART 1: RETRIEVAL METRICS")
 print("="*70)
 
 # Test query
-query = "How should I evaluate the quality of my RAG system?"
+query = "What training programs does ACME Corporation offer and what are the prices?"
 
 print(f"\n❓ Query: '{query}'")
 

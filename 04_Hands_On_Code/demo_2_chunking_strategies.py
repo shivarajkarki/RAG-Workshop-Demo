@@ -43,32 +43,19 @@ if not GOOGLE_API_KEY:
 print("✅ API Key loaded\n")
 
 # ========================================
-# Sample document (deliberately long)
+# Load knowledge base from file
 # ========================================
-document = """
-Retrieval Augmented Generation (RAG) is a powerful technique for enhancing Large Language Models.
-It works by combining information retrieval with text generation. This approach has several benefits.
+print("📚 Loading knowledge base from file...")
 
-First, RAG helps reduce hallucinations. LLMs sometimes make up facts that sound plausible but are incorrect.
-By retrieving actual documents and using them as context, the model stays grounded in factual information.
-This is especially important in domains like healthcare, legal, and finance where accuracy is critical.
+knowledge_file = "knowledge_base.txt"
+if not os.path.exists(knowledge_file):
+    print(f"❌ ERROR: {knowledge_file} not found!")
+    exit(1)
 
-Second, RAG provides up-to-date information. LLMs are trained on data up to a certain cutoff date.
-They don't know about events or information after that date. RAG solves this by retrieving current documents.
-Your knowledge base can be updated daily, and the LLM will use the latest information.
+with open(knowledge_file, 'r', encoding='utf-8') as f:
+    document = f.read()
 
-Third, RAG enables domain-specific knowledge. General-purpose LLMs don't know your company's internal docs,
-your product specifications, or your customer data. RAG allows you to create a knowledge base from your own
-documents and have the LLM answer questions using that specific knowledge.
-
-The RAG pipeline has two main phases. The indexing phase happens once: you split documents into chunks,
-create embeddings for each chunk, and store them in a vector database. The query phase happens every time
-a user asks a question: you embed the question, find similar chunks, and pass them to the LLM as context.
-
-Choosing the right chunk size is crucial. Too small, and you lose context. Too large, and irrelevant
-information gets included. A good rule of thumb is 200-500 tokens per chunk with 10-20% overlap.
-But the optimal size depends on your documents and use case. Always evaluate with real queries!
-"""
+print(f"✅ Loaded knowledge base ({len(document)} characters)\n")
 
 print("📄 Original Document:")
 print("-" * 70)
@@ -211,7 +198,7 @@ embeddings = GoogleGenerativeAIEmbeddings(
 )
 
 # Test query
-test_query = "How does RAG reduce hallucinations?"
+test_query = "What is AutoFlow AI and what are its key features?"
 print(f"\n❓ Test Query: '{test_query}'\n")
 
 strategies = [

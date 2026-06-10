@@ -312,70 +312,59 @@ class ProductionRAGSystem:
         print("   💡 In production: Update eval dataset, analyze patterns, improve system\n")
 
 # ========================================
-# SAMPLE KNOWLEDGE BASE
+# LOAD KNOWLEDGE BASE FROM FILE
 # ========================================
-sample_documents = [
-    {
-        "content": """RAG (Retrieval Augmented Generation) combines information retrieval
-        with LLM generation. It reduces hallucinations by grounding answers in retrieved documents.
-        RAG is essential for enterprise AI where accuracy and up-to-date information are critical.
-        The technique was introduced by Facebook AI (now Meta) in 2020.""",
+print("📚 Loading knowledge base from file...")
+
+knowledge_file = "knowledge_base.txt"
+if not os.path.exists(knowledge_file):
+    print(f"❌ ERROR: {knowledge_file} not found!")
+    exit(1)
+
+with open(knowledge_file, 'r', encoding='utf-8') as f:
+    full_text = f.read()
+
+print(f"✅ Loaded knowledge base ({len(full_text)} characters)\n")
+
+# Split into sections and create structured documents with metadata
+sections = [s.strip() for s in full_text.split('\n\n') if s.strip() and len(s.strip()) > 100]
+
+sample_documents = []
+for i, section in enumerate(sections[:8]):  # Use first 8 sections
+    section_lower = section.lower()
+
+    # Categorize based on content
+    if any(word in section_lower for word in ['product', 'autoflow', 'features', 'pricing', 'platform']):
+        category = "product_info"
+        topic = "products"
+    elif any(word in section_lower for word in ['customer', 'techmart', 'healthcare', 'finserve', 'success']):
+        category = "customer_stories"
+        topic = "customers"
+    elif any(word in section_lower for word in ['training', 'certification', 'course', 'learning']):
+        category = "training"
+        topic = "education"
+    elif any(word in section_lower for word in ['support', 'contact', 'phone', 'email', 'technical']):
+        category = "support"
+        topic = "contact"
+    elif any(word in section_lower for word in ['company', 'acme', 'overview', 'headquarters', 'founded']):
+        category = "company_info"
+        topic = "about"
+    else:
+        category = "general"
+        topic = "info"
+
+    sample_documents.append({
+        "content": section,
         "metadata": {
-            "source": "rag_basics.md",
-            "category": "technical",
-            "topic": "rag",
-            "last_updated": "2024-03-01"
+            "source": "knowledge_base.txt",
+            "category": category,
+            "topic": topic,
+            "section_id": i,
+            "last_updated": "2025-01-15"
         }
-    },
-    {
-        "content": """Chunking strategies affect RAG quality significantly. Recommended chunk size
-        is 200-500 tokens with 10-20% overlap. Use RecursiveCharacterTextSplitter for most cases.
-        For code, respect function boundaries. For tables, keep rows together. Always add metadata
-        like source, page number, and section heading.""",
-        "metadata": {
-            "source": "chunking_guide.md",
-            "category": "technical",
-            "topic": "chunking",
-            "last_updated": "2024-03-05"
-        }
-    },
-    {
-        "content": """Vector databases store embeddings and enable fast similarity search. ChromaDB
-        is easy for prototyping, FAISS is ultra-fast for production. Use cosine similarity for
-        semantic search, MMR for diverse results. Always add metadata for filtering. Production
-        systems need persistence, caching, and monitoring.""",
-        "metadata": {
-            "source": "vector_db_guide.md",
-            "category": "technical",
-            "topic": "vector_databases",
-            "last_updated": "2024-03-10"
-        }
-    },
-    {
-        "content": """RAG evaluation requires both retrieval and generation metrics. Retrieval metrics:
-        Precision, Recall, MRR, NDCG. Generation metrics: Faithfulness, Answer Relevance, Context
-        Relevance. RAGAS framework automates evaluation. Track metrics in production, set up alerts
-        for quality drops, and use A/B testing for improvements.""",
-        "metadata": {
-            "source": "evaluation_guide.md",
-            "category": "technical",
-            "topic": "evaluation",
-            "last_updated": "2024-03-15"
-        }
-    },
-    {
-        "content": """Production RAG systems need: 1) Caching (embeddings + LLM calls), 2) Monitoring
-        (latency, cost, quality), 3) Error handling (fallbacks, retries), 4) User feedback loops,
-        5) A/B testing, 6) Security (input validation, access control), 7) Rate limiting,
-        8) Cost optimization (smaller models, batching).""",
-        "metadata": {
-            "source": "production_checklist.md",
-            "category": "best_practices",
-            "topic": "production",
-            "last_updated": "2024-03-20"
-        }
-    }
-]
+    })
+
+print(f"✅ Prepared {len(sample_documents)} documents with metadata\n")
 
 # ========================================
 # MAIN DEMO
@@ -393,10 +382,10 @@ def main():
 
     # Test queries
     test_queries = [
-        ("What is RAG and why is it important?", None),
-        ("Tell me about chunking strategies", None),
-        ("How do I evaluate my RAG system?", None),
-        ("What production considerations should I know?", {"category": "best_practices"}),  # With filter
+        ("What is ACME Corporation and what products do they offer?", None),
+        ("Tell me about AutoFlow AI pricing plans", None),
+        ("What are ACME's customer success stories?", None),
+        ("What training programs does ACME offer?", {"category": "training"}),  # With filter
     ]
 
     for i, (query, metadata_filter) in enumerate(test_queries, 1):

@@ -45,60 +45,56 @@ if not GOOGLE_API_KEY:
 print("✅ API Key loaded\n")
 
 # ========================================
-# CREATE SAMPLE KNOWLEDGE BASE
+# CREATE KNOWLEDGE BASE FROM FILE
 # ========================================
-print("📚 Creating knowledge base with diverse topics...")
+print("📚 Loading knowledge base from file...")
 
-documents = [
-    # Python programming (Topic 1)
-    """Python is a high-level programming language. It has simple syntax and is beginner-friendly.
-    Python is widely used in web development, data science, AI, and automation. It has a vast ecosystem of libraries.""",
+knowledge_file = "knowledge_base.txt"
+if not os.path.exists(knowledge_file):
+    print(f"❌ ERROR: {knowledge_file} not found!")
+    exit(1)
 
-    """Python libraries include NumPy for numerical computing, Pandas for data manipulation, Matplotlib for visualization,
-    and TensorFlow for machine learning. The pip package manager makes it easy to install libraries.""",
+with open(knowledge_file, 'r', encoding='utf-8') as f:
+    full_text = f.read()
 
-    # RAG systems (Topic 2)
-    """RAG (Retrieval Augmented Generation) combines search with LLM generation. It reduces hallucinations
-    and provides up-to-date information. RAG is essential for enterprise AI applications.""",
+print(f"✅ Loaded knowledge base ({len(full_text)} characters)\n")
 
-    """RAG systems need vector databases for storing embeddings. Popular vector DBs include ChromaDB,
-    FAISS, Pinecone, and Weaviate. Each has different trade-offs for speed, scale, and features.""",
+# Split into sections (by double newlines)
+sections = [s.strip() for s in full_text.split('\n\n') if s.strip() and len(s.strip()) > 50]
 
-    # Machine learning (Topic 3)
-    """Machine learning is a subset of AI that learns patterns from data. Types include supervised learning,
-    unsupervised learning, and reinforcement learning. ML powers recommendation systems and predictions.""",
+# Take first 10 substantial sections
+documents = sections[:10]
 
-    """Deep learning uses neural networks with multiple layers. It excels at image recognition, NLP,
-    and complex pattern recognition. Popular frameworks are TensorFlow, PyTorch, and Keras.""",
+# Add metadata based on content
+doc_metadata = []
+for doc in documents:
+    doc_lower = doc.lower()
 
-    # Cloud computing (Topic 4)
-    """Cloud computing provides on-demand computing resources over the internet. Major providers are AWS,
-    Google Cloud, and Microsoft Azure. Cloud enables scalability and reduces infrastructure costs.""",
+    # Determine category based on keywords
+    if any(word in doc_lower for word in ['product', 'autoflow', 'features', 'pricing']):
+        category = "product_info"
+        topic = "products"
+    elif any(word in doc_lower for word in ['customer', 'techmart', 'healthcare', 'finserve']):
+        category = "customer_stories"
+        topic = "customers"
+    elif any(word in doc_lower for word in ['training', 'certification', 'course']):
+        category = "training"
+        topic = "education"
+    elif any(word in doc_lower for word in ['support', 'contact', 'phone', 'email']):
+        category = "support"
+        topic = "contact"
+    elif any(word in doc_lower for word in ['company', 'acme', 'overview', 'headquarters']):
+        category = "company_info"
+        topic = "about"
+    else:
+        category = "general"
+        topic = "info"
 
-    """Cloud services include IaaS (Infrastructure), PaaS (Platform), and SaaS (Software as a Service).
-    Serverless computing lets you run code without managing servers. Examples: AWS Lambda, Google Cloud Functions.""",
-
-    # Data science (Topic 5)
-    """Data science combines statistics, programming, and domain knowledge. The workflow includes data collection,
-    cleaning, analysis, modeling, and visualization. Data scientists use Python, R, and SQL.""",
-
-    """Data science tools include Jupyter notebooks for interactive analysis, scikit-learn for machine learning,
-    and Tableau for visualization. Big data tools like Spark handle large-scale data processing.""",
-]
-
-# Add metadata to documents
-doc_metadata = [
-    {"topic": "python", "difficulty": "beginner", "category": "programming"},
-    {"topic": "python", "difficulty": "intermediate", "category": "programming"},
-    {"topic": "rag", "difficulty": "intermediate", "category": "ai"},
-    {"topic": "rag", "difficulty": "advanced", "category": "ai"},
-    {"topic": "ml", "difficulty": "beginner", "category": "ai"},
-    {"topic": "ml", "difficulty": "advanced", "category": "ai"},
-    {"topic": "cloud", "difficulty": "beginner", "category": "infrastructure"},
-    {"topic": "cloud", "difficulty": "intermediate", "category": "infrastructure"},
-    {"topic": "data_science", "difficulty": "beginner", "category": "analytics"},
-    {"topic": "data_science", "difficulty": "intermediate", "category": "analytics"},
-]
+    doc_metadata.append({
+        "topic": topic,
+        "category": category,
+        "source": "knowledge_base.txt"
+    })
 
 # Create chunks with metadata
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=200, chunk_overlap=20)
@@ -164,7 +160,7 @@ print("\n\n" + "="*70)
 print("🎯 PART 2: RETRIEVAL STRATEGIES - How to Search")
 print("="*70)
 
-query = "Tell me about Python libraries for data analysis"
+query = "What is AutoFlow AI and what are its key features?"
 print(f"\n❓ Test Query: '{query}'\n")
 
 # ----------------------------------------
@@ -281,7 +277,7 @@ print("📖 How it works: Filter documents by metadata BEFORE vector search")
 print("🎯 Use when: You want results from specific categories, time periods, sources")
 
 # Filter: Only search in "ai" category documents
-filter_query = {"category": "ai"}
+filter_query = {"category": "product_info"}
 filtered_results = chroma_db.similarity_search(
     query,
     k=3,
@@ -364,7 +360,7 @@ print("="*70)
 
 import time
 
-query = "machine learning frameworks"
+query = "Tell me about ACME's customer success stories"
 
 strategies = [
     ("Cosine Similarity", lambda: chroma_db.similarity_search(query, k=3)),
