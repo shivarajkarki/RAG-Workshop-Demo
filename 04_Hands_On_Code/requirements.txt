@@ -1,0 +1,37 @@
+# RAG Demo - Python Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core AI/ML libraries
+google-generativeai==0.8.3      # Gemini API
+langchain==0.3.7                # RAG framework
+langchain-google-genai==2.0.5   # Gemini integration with LangChain
+langchain-community==0.3.7      # Community integrations
+
+# Vector Databases
+chromadb==0.5.23                # Simple, lightweight vector DB
+faiss-cpu==1.9.0.post1          # Facebook AI Similarity Search (CPU version)
+# faiss-gpu==1.9.0.post1        # Uncomment if you have CUDA GPU
+
+# Embeddings
+sentence-transformers==3.3.1    # For local embeddings (backup)
+
+# Text Processing
+tiktoken==0.8.0                 # Token counting
+pypdf==5.1.0                    # PDF processing
+python-docx==1.1.2              # Word document processing
+
+# Evaluation Metrics
+ragas==0.2.9                    # RAG Assessment (Retrieval + Generation metrics)
+datasets==3.2.0                 # For loading evaluation datasets
+
+# Utilities
+numpy>=1.24.0,<2.0.0            # Numerical operations (compatible with langchain)
+pandas==2.2.3                   # Data manipulation
+matplotlib==3.10.0              # Visualization
+seaborn==0.13.2                 # Statistical visualization
+tqdm==4.67.1                    # Progress bars
+python-dotenv==1.0.1            # Environment variables
+
+# Optional but recommended
+jupyter==1.1.1                  # For interactive notebooks
+ipywidgets==8.1.5               # Interactive widgets in Jupyter
