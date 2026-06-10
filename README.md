@@ -14,9 +14,11 @@ Welcome to the **Retrieval Augmented Generation (RAG)** workshop! This repositor
 ## Prerequisites
 
 - **Python 3.8+** installed on your system
-- **Google Gemini API Key** (free) - Get yours at: https://makersuite.google.com/app/apikey
+- **Google Gemini API Key** (free) - See detailed setup instructions below ⬇️
 - Basic Python knowledge (functions, loops, imports)
 - Text editor or IDE (VS Code, PyCharm, etc.)
+
+> 💡 **New to Gemini API?** Don't worry! Step-by-step instructions for getting your free API key are in the [Quick Start section](#3-get-your-free-gemini-api-key) below.
 
 ## Quick Start
 
@@ -41,19 +43,68 @@ pip install -r requirements.txt
 - `chromadb` - Vector database
 - `python-dotenv` - Environment variable management
 
-### 3. Set Up Your API Key
+### 3. Get Your Free Gemini API Key
 
+**Step-by-step instructions:**
+
+#### Step 1: Go to Google AI Studio
+Visit: https://makersuite.google.com/app/apikey
+
+OR
+
+Visit: https://aistudio.google.com/app/apikey
+
+#### Step 2: Sign In
+- Click "Sign in" (top right)
+- Use your Google account (Gmail)
+- If you don't have one, create a free Google account
+
+#### Step 3: Create API Key
+1. Click **"Get API key"** button
+2. You'll see two options:
+   - **"Create API key in new project"** (recommended for first-time)
+   - **"Create API key in existing project"** (if you already have Google Cloud projects)
+3. Click **"Create API key in new project"**
+4. Wait 2-3 seconds...
+5. Your API key will appear! It looks like: `AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXX`
+
+#### Step 4: Copy Your API Key
+- Click the **"Copy"** icon next to your key
+- **IMPORTANT:** Save it somewhere safe! You can always come back to see it again.
+
+#### Step 5: Set Up Environment File
 Create a `.env` file in the `04_Hands_On_Code` directory:
 
+**Option A: Using Command Line**
 ```bash
 # Copy the example file
 cp .env.example .env
 
-# Edit .env and add your API key
-GOOGLE_API_KEY=your-actual-api-key-here
+# Open .env in a text editor and add your key
+# Windows: notepad .env
+# Mac/Linux: nano .env
 ```
 
-**Important:** Never commit your `.env` file to git! It's already in `.gitignore`.
+**Option B: Manually**
+1. Open `04_Hands_On_Code` folder
+2. Create new file named `.env` (notice the dot at the start!)
+3. Add this line:
+```
+GOOGLE_API_KEY=AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXX
+```
+4. Replace with your actual key
+5. Save the file
+
+**Important:**
+- ✅ Never share your API key publicly
+- ✅ Never commit `.env` to git (already in `.gitignore`)
+- ✅ If key is compromised, delete it and create a new one
+
+#### Free Tier Limits:
+- **60 requests per minute**
+- **1,500 requests per day**
+- Perfect for learning and small projects!
+- Upgrade to paid tier if needed: https://ai.google.dev/pricing
 
 ### 4. Run Your First Demo
 
@@ -201,6 +252,28 @@ Use this as a template for your own projects!
 ❌ ERROR: GOOGLE_API_KEY not found!
 ```
 **Solution:** Create `.env` file with your API key (see Quick Start #3)
+
+**Common API Key Problems:**
+
+**Problem:** "API key not found"
+- ✅ Check `.env` file exists in `04_Hands_On_Code` folder
+- ✅ Check `.env` has: `GOOGLE_API_KEY=your-key-here` (no spaces!)
+- ✅ Check no quotes around key: `GOOGLE_API_KEY=AIza...` (not `"AIza..."`)
+
+**Problem:** "Invalid API key"
+- ✅ Copy key again from https://aistudio.google.com/app/apikey
+- ✅ Make sure you copied the entire key (starts with `AIza`)
+- ✅ No extra spaces before or after key
+
+**Problem:** "API key quota exceeded" (429 error)
+- ✅ Free tier: 60 requests/min, 1500 requests/day
+- ✅ Wait 24 hours for daily quota reset
+- ✅ Or upgrade to paid tier: https://ai.google.dev/pricing
+
+**Problem:** "API key not enabled for Gemini"
+- ✅ Make sure you created key at https://aistudio.google.com/app/apikey
+- ✅ Not Google Cloud Console (different API keys!)
+- ✅ Wait 1-2 minutes after creating key (activation time)
 
 ---
 
