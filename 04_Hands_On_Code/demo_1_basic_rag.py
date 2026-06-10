@@ -1,17 +1,16 @@
 """
-Demo 1: Basic RAG - The Simplest Possible Implementation
+Demo 1: Basic RAG - See the Power of RAG!
 ========================================================
 
-This is RAG in ~15 lines of code! 🚀
+This demo shows the DRAMATIC difference RAG makes! 🚀
 
-CONCEPT: Retrieval Augmented Generation
-- Store documents (knowledge base)
-- When user asks a question:
-  1. RETRIEVE: Find relevant documents
-  2. AUGMENT: Add them to the question as context
-  3. GENERATE: LLM answers using that context
+PART 1: LLM WITHOUT RAG
+- Ask about company info → LLM doesn't know (hallucination or generic answer)
 
-Run this demo to see RAG in action!
+PART 2: LLM WITH RAG
+- Add knowledge base → LLM gives EXACT, accurate answers!
+
+This is why RAG is essential for real-world AI applications!
 """
 
 import os
@@ -54,46 +53,80 @@ if not GOOGLE_API_KEY:
 print("✅ API Key loaded successfully!\n")
 
 # ========================================
-# STEP 1: Create sample documents (knowledge base)
+# PART 1: LLM WITHOUT RAG (Baseline)
 # ========================================
-print("📚 STEP 1: Creating Knowledge Base...")
+print("="*70)
+print("⚡ PART 1: LLM WITHOUT RAG - Showing the Problem")
+print("="*70 + "\n")
 
-documents = [
-    """RAG (Retrieval Augmented Generation) is a technique that combines information
-    retrieval with text generation. It helps Large Language Models answer questions
-    using external knowledge, reducing hallucinations and providing up-to-date information.""",
+# Initialize LLM first (without any knowledge base)
+print("🤖 Initializing Gemini LLM...")
+llm = GoogleGenerativeAI(
+    model="models/gemini-2.5-flash",
+    google_api_key=GOOGLE_API_KEY,
+    temperature=0.3
+)
+print("✅ LLM ready!\n")
 
-    """Vector databases store embeddings (numerical representations of text) and enable
-    fast similarity search. Popular vector databases include Chroma, FAISS, Pinecone,
-    and Weaviate. They use algorithms like HNSW or IVF for approximate nearest neighbor search.""",
+# Ask about ACME Corporation (LLM won't know this)
+test_question = "What is ACME Corporation's flagship product and what are its pricing plans?"
 
-    """Chunking is the process of splitting large documents into smaller pieces.
-    Good chunking strategies preserve meaning and context. Common chunk sizes are
-    200-500 tokens with 20-50 token overlap between chunks.""",
+print(f"❓ Question: {test_question}\n")
+print("🤔 Asking LLM directly (WITHOUT RAG)...\n")
 
-    """Embeddings convert text into high-dimensional vectors. Similar meanings result
-    in similar vectors. Gemini's text-embedding-004 model produces 768-dimensional
-    embeddings. These vectors capture semantic meaning.""",
+try:
+    direct_answer = llm.invoke(test_question)
+    print("💬 LLM Response (without RAG):")
+    print(f"{direct_answer}\n")
+    print("❌ PROBLEM: LLM doesn't know ACME! It either:")
+    print("   - Makes up information (hallucination)")
+    print("   - Gives generic answer")
+    print("   - Says 'I don't know'\n")
+except Exception as e:
+    print(f"❌ Error: {e}\n")
 
-    """RAG evaluation uses metrics like Precision, Recall, NDCG for retrieval quality,
-    and Faithfulness, Relevance, and Answer Similarity for generation quality.
-    RAGAS framework provides end-to-end RAG evaluation."""
-]
-
-print(f"✅ Created {len(documents)} documents in our knowledge base\n")
+print("⏸️  Now let's add RAG and see the magic! ✨\n")
+# input("Press Enter to continue...")  # Commented for automated testing
+import time
+time.sleep(2)  # Brief pause for dramatic effect
 
 # ========================================
-# STEP 2: Split documents into chunks
+# PART 2: LLM WITH RAG - The Solution!
 # ========================================
-print("✂️ STEP 2: Chunking documents...")
+print("\n" + "="*70)
+print("🚀 PART 2: LLM WITH RAG - The Solution!")
+print("="*70 + "\n")
+
+# ========================================
+# STEP 1: Load knowledge base from file
+# ========================================
+print("📚 STEP 1: Loading Knowledge Base from file...")
+
+# Read the knowledge base document
+knowledge_file = "knowledge_base.txt"
+if not os.path.exists(knowledge_file):
+    print(f"❌ ERROR: {knowledge_file} not found!")
+    exit(1)
+
+with open(knowledge_file, 'r', encoding='utf-8') as f:
+    document_text = f.read()
+
+print(f"✅ Loaded knowledge base ({len(document_text)} characters)\n")
+print(f"📄 Knowledge Base Preview:")
+print(f"{document_text[:200]}...\n")
+
+# ========================================
+# STEP 2: Split document into chunks
+# ========================================
+print("✂️ STEP 2: Chunking document...")
 
 text_splitter = CharacterTextSplitter(
-    chunk_size=200,      # Maximum characters per chunk
-    chunk_overlap=20,    # Overlap between chunks for context
-    separator="\n"       # Split on newlines when possible
+    chunk_size=500,      # Larger chunks for detailed content
+    chunk_overlap=50,    # Overlap between chunks for context
+    separator="\n\n"     # Split on paragraph breaks
 )
 
-chunks = text_splitter.create_documents(documents)
+chunks = text_splitter.create_documents([document_text])
 print(f"✅ Split into {len(chunks)} chunks\n")
 
 # ========================================
@@ -117,22 +150,9 @@ vectorstore = Chroma.from_documents(
 print("✅ Vector database created with embeddings!\n")
 
 # ========================================
-# STEP 4: Initialize the LLM (Gemini)
+# STEP 4: Create RAG chain
 # ========================================
-print("🤖 STEP 4: Initializing Gemini LLM...")
-
-llm = GoogleGenerativeAI(
-    model="models/gemini-2.5-flash",  # Latest, fastest Gemini model
-    google_api_key=GOOGLE_API_KEY,
-    temperature=0.3  # Lower temperature = more focused answers
-)
-
-print("✅ LLM initialized!\n")
-
-# ========================================
-# STEP 5: Create RAG chain
-# ========================================
-print("🔗 STEP 5: Building RAG chain...")
+print("🔗 STEP 4: Building RAG chain...")
 
 # This creates a question-answering chain with retrieval
 qa_chain = RetrievalQA.from_chain_type(
@@ -145,23 +165,45 @@ qa_chain = RetrievalQA.from_chain_type(
 print("✅ RAG chain ready!\n")
 
 # ========================================
-# STEP 6: Ask questions!
+# STEP 5: Ask the SAME question WITH RAG!
 # ========================================
-print("="*60)
-print("🎯 RAG SYSTEM IS READY! Let's test it!")
-print("="*60 + "\n")
+print("="*70)
+print("🎯 NOW ASKING WITH RAG!")
+print("="*70 + "\n")
 
-# Test questions
+# Ask the SAME question again (but with RAG this time)
+print(f"❓ Question: {test_question}\n")
+
+result = qa_chain.invoke({"query": test_question})
+
+print(f"💬 RAG Answer:")
+print(f"{result['result']}\n")
+
+print(f"📄 Sources Used:")
+for j, doc in enumerate(result['source_documents'], 1):
+    print(f"\nSource {j}:")
+    print(f"{doc.page_content[:150]}...")  # Show first 150 chars
+
+print("\n✅ SUCCESS! With RAG, the LLM now has accurate, up-to-date information!\n")
+
+# ========================================
+# STEP 6: Ask more questions!
+# ========================================
+print("="*70)
+print("🎯 Let's ask MORE questions!")
+print("="*70 + "\n")
+
+# More ACME-specific questions
 questions = [
-    "What is RAG and why is it useful?",
-    "What are some popular vector databases?",
-    "How should I evaluate a RAG system?",
+    "What are ACME Corporation's customer success stories?",
+    "What training programs does ACME offer and what are the prices?",
+    "What is AutoFlow AI's pricing for the Professional plan?",
 ]
 
 for i, question in enumerate(questions, 1):
-    print(f"\n{'='*60}")
+    print(f"\n{'='*70}")
     print(f"❓ Question {i}: {question}")
-    print('='*60)
+    print('='*70)
 
     # Get answer from RAG system
     result = qa_chain.invoke({"query": question})
@@ -172,25 +214,39 @@ for i, question in enumerate(questions, 1):
     print(f"\n📄 Sources Used:")
     for j, doc in enumerate(result['source_documents'], 1):
         print(f"\n  Source {j}:")
-        print(f"  {doc.page_content[:100]}...")  # Show first 100 chars
+        print(f"  {doc.page_content[:120]}...")  # Show first 120 chars
 
-print("\n" + "="*60)
+print("\n" + "="*70)
 print("✨ Demo Complete!")
-print("="*60)
+print("="*70)
 
 # ========================================
 # KEY TAKEAWAYS
 # ========================================
 print("\n🎓 KEY TAKEAWAYS:")
-print("1. RAG = Retrieval (search) + Augmented (add context) + Generation (LLM answers)")
-print("2. Vector DB stores embeddings for fast similarity search")
-print("3. Embeddings convert text → numbers that capture meaning")
-print("4. Chain combines: Query → Retrieve → Add to prompt → Generate answer")
-print("5. Source documents show transparency (which knowledge was used)")
+print("\n1. WITHOUT RAG:")
+print("   ❌ LLM has knowledge cutoff (training data ends at certain date)")
+print("   ❌ Doesn't know company-specific or recent information")
+print("   ❌ May hallucinate or give generic answers")
 
-print("\n🚀 This is RAG at its simplest! Next demos will explore advanced concepts.")
+print("\n2. WITH RAG:")
+print("   ✅ LLM gets access to external knowledge base")
+print("   ✅ Answers are grounded in actual documents")
+print("   ✅ Can answer about ANY domain (company docs, recent events, etc.)")
+
+print("\n3. HOW RAG WORKS:")
+print("   • Load documents → Split into chunks → Create embeddings")
+print("   • Store in vector database → Retrieve relevant chunks → Generate answer")
+
+print("\n4. WHY RAG IS ESSENTIAL:")
+print("   • Up-to-date information (knowledge base can be updated daily)")
+print("   • Domain-specific knowledge (your company, products, policies)")
+print("   • Reduces hallucinations (answers based on retrieved facts)")
+print("   • Transparency (shows which documents were used)")
+
+print("\n🚀 This is RAG's superpower! Next demos will explore advanced concepts.")
 print("\n💡 Try modifying:")
-print("   - Add your own documents")
+print("   - Edit knowledge_base.txt with your own content")
 print("   - Change chunk_size and chunk_overlap")
 print("   - Adjust 'k' (number of chunks retrieved)")
-print("   - Try different questions")
+print("   - Ask your own questions")

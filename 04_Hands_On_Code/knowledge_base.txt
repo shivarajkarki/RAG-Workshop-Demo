@@ -1,0 +1,256 @@
+ACME CORPORATION - INTERNAL KNOWLEDGE BASE
+===========================================
+Last Updated: January 2025
+
+COMPANY OVERVIEW
+----------------
+
+ACME Corporation is a technology company founded in 2024, specializing in AI-powered automation solutions. Our headquarters is located in Bangalore, India, with additional offices in Mumbai and Hyderabad. We currently employ 450 people across engineering, sales, and operations teams.
+
+Our flagship product, AutoFlow AI, was launched in March 2024 and has already gained 15,000 active users. AutoFlow AI helps businesses automate document processing, data extraction, and workflow management using advanced machine learning models.
+
+
+PRODUCT DETAILS: AutoFlow AI
+-----------------------------
+
+AutoFlow AI Platform Features:
+- Intelligent Document Processing: Extract data from invoices, receipts, contracts, and forms with 98% accuracy
+- Multi-language Support: Works with 25+ languages including Hindi, Tamil, Bengali, and English
+- Custom Workflow Builder: Drag-and-drop interface to create automation workflows
+- API Integration: RESTful APIs with SDKs for Python, JavaScript, and Java
+- Cloud Deployment: Hosted on AWS with 99.9% uptime SLA
+
+Pricing Plans (as of January 2025):
+- Starter Plan: $49/month - Up to 1,000 documents/month
+- Professional Plan: $199/month - Up to 10,000 documents/month
+- Enterprise Plan: Custom pricing - Unlimited documents, dedicated support
+
+Technical Stack:
+- Backend: Python (FastAPI), Node.js
+- Frontend: React, TypeScript
+- AI Models: Custom fine-tuned GPT-4, Claude Sonnet, Gemini Pro
+- Database: PostgreSQL, Redis (caching)
+- Vector Database: Pinecone for RAG-based features
+- Deployment: Docker, Kubernetes on AWS EKS
+
+
+RECENT UPDATES AND RELEASES
+----------------------------
+
+Version 2.5.0 (December 2024):
+- Added support for handwritten text recognition
+- Introduced batch processing for up to 500 documents simultaneously
+- New dashboard with real-time analytics
+- Improved accuracy for Indian government documents (Aadhaar, PAN cards, GST certificates)
+
+Version 2.4.0 (November 2024):
+- Launched AutoFlow AI Mobile App for iOS and Android
+- Added OCR support for 10 additional languages
+- Introduced smart field validation (automatic error detection)
+- Performance improvements: 40% faster processing speed
+
+Version 2.3.0 (October 2024):
+- Integration with popular tools: Zapier, Salesforce, HubSpot
+- Added custom ML model training for enterprise customers
+- Enhanced security: SOC 2 Type II compliance achieved
+- New API rate limits: 10,000 requests/hour for Pro plan
+
+
+CUSTOMER SUCCESS STORIES
+-------------------------
+
+TechMart India (E-commerce):
+TechMart processes 50,000 invoices monthly from suppliers. Before AutoFlow AI, they employed 12 people for manual data entry, taking 3-4 days per batch. After implementing AutoFlow AI in June 2024, processing time reduced to 2 hours with 99% accuracy. They saved approximately ₹2.5 crore annually in operational costs.
+
+HealthCare Plus (Hospital Chain):
+HealthCare Plus operates 25 hospitals across India. They use AutoFlow AI to digitize patient records, insurance claims, and medical prescriptions. Since implementation in August 2024, they've processed 2 million documents and reduced claim processing time from 7 days to 24 hours.
+
+FinServe Bank (Banking):
+FinServe Bank deployed AutoFlow AI for loan application processing in September 2024. The system automatically extracts data from income proofs, property documents, and identity verification. Loan approval time decreased from 5 days to 6 hours, improving customer satisfaction by 85%.
+
+
+TRAINING AND CERTIFICATION
+---------------------------
+
+ACME offers official certification programs for AutoFlow AI:
+
+1. AutoFlow AI Fundamentals (2 days, ₹15,000):
+   - Introduction to document automation
+   - Platform navigation and basic workflows
+   - API integration basics
+   - Certification exam
+
+2. AutoFlow AI Advanced (3 days, ₹25,000):
+   - Custom ML model training
+   - Complex workflow design
+   - Performance optimization
+   - Security best practices
+   - Advanced API usage
+
+3. AutoFlow AI Developer (5 days, ₹40,000):
+   - Deep dive into APIs and SDKs
+   - Custom integration development
+   - Webhook implementation
+   - Microservices architecture
+   - Production deployment strategies
+
+Training Schedule for Q1 2025:
+- Bangalore: Every 2nd and 4th Saturday
+- Mumbai: Every 1st and 3rd Saturday
+- Online: Every Friday (6 PM - 8 PM IST)
+
+
+SUPPORT AND CONTACT
+--------------------
+
+Technical Support:
+- Email: support@acmecorp.in
+- Phone: +91-80-4567-8900 (Mon-Fri, 9 AM - 6 PM IST)
+- Live Chat: Available 24/7 on platform dashboard
+- Average Response Time: 2 hours for critical issues
+
+Sales Inquiries:
+- Email: sales@acmecorp.in
+- Phone: +91-80-4567-8901
+- Schedule Demo: https://acmecorp.in/demo
+
+Developer Resources:
+- Documentation: https://docs.acmecorp.in
+- API Reference: https://api.acmecorp.in/docs
+- GitHub: https://github.com/acmecorp/autoflow-sdk
+- Community Forum: https://community.acmecorp.in
+
+Office Locations:
+- Bangalore HQ: Brigade Road, Bangalore - 560001
+- Mumbai Office: Andheri East, Mumbai - 400069
+- Hyderabad Office: HITEC City, Hyderabad - 500081
+
+
+COMPANY POLICIES (INTERNAL)
+----------------------------
+
+Employee Benefits (2025):
+- Health Insurance: Comprehensive coverage for employee + family
+- Work From Home: Hybrid model - 3 days office, 2 days remote
+- Learning Budget: ₹50,000/year for courses, conferences, certifications
+- Paid Leave: 24 days annual leave + 12 public holidays
+- Stock Options: Eligible after 1 year of service
+
+Performance Reviews:
+- Conducted quarterly (March, June, September, December)
+- Based on OKRs (Objectives and Key Results)
+- Bonus Structure: Up to 30% of annual salary based on performance
+- Promotion Cycle: Every 6 months for high performers
+
+Security Guidelines:
+- Two-factor authentication mandatory for all systems
+- VPN required for remote access
+- No customer data on personal devices
+- Code review required for all production deployments
+- Security training: Quarterly mandatory sessions
+
+
+FUTURE ROADMAP (2025)
+----------------------
+
+Q1 2025 (January - March):
+- Launch AutoFlow AI Voice: Voice-based document queries
+- Add 15 more language models
+- Introduce AutoFlow AI Copilot: AI assistant for workflow building
+
+Q2 2025 (April - June):
+- Release AutoFlow AI Desktop app for Windows and Mac
+- Launch marketplace for pre-built workflow templates
+- Add real-time collaboration features
+
+Q3 2025 (July - September):
+- Expand to Southeast Asian markets (Singapore, Malaysia, Indonesia)
+- Introduce industry-specific solutions (Healthcare, Finance, Legal)
+- Launch AutoFlow AI Academy for enterprise training
+
+Q4 2025 (October - December):
+- AI Model Customization: No-code ML model training
+- Advanced analytics with predictive insights
+- Open beta for AutoFlow AI 3.0
+
+
+COMPETITIVE ANALYSIS
+--------------------
+
+Our main competitors:
+
+1. DocuTech AI (US-based):
+   - Strengths: Strong brand, enterprise focus
+   - Weaknesses: Limited Indian language support, expensive (starts at $299/month)
+   - Our Advantage: 60% cheaper, better Hindi/regional language support
+
+2. SmartDocs India:
+   - Strengths: Local presence, good customer support
+   - Weaknesses: Slower processing, outdated UI
+   - Our Advantage: 3x faster, modern interface, better accuracy
+
+3. ProcessIQ:
+   - Strengths: Advanced analytics features
+   - Weaknesses: Complex setup, steep learning curve
+   - Our Advantage: Easier to use, faster onboarding, better pricing
+
+Market Position:
+- We captured 12% market share in India within 9 months (as of December 2024)
+- Target: 25% market share by end of 2025
+- Customer Retention Rate: 94% (industry average: 78%)
+
+
+TECHNOLOGY INNOVATIONS
+-----------------------
+
+Proprietary AI Models:
+
+1. DocuVision Engine (launched September 2024):
+   - Custom-trained computer vision model for Indian documents
+   - Handles poor quality scans, rotated images, watermarks
+   - Accuracy: 98.5% on government documents (best in industry)
+
+2. SmartExtract Algorithm (launched October 2024):
+   - Context-aware data extraction using RAG (Retrieval Augmented Generation)
+   - Learns from user corrections to improve over time
+   - Reduces manual verification by 80%
+
+3. FlowOptimizer (launched November 2024):
+   - AI-powered workflow recommendation system
+   - Suggests optimizations based on usage patterns
+   - Average efficiency gain: 35% in processing time
+
+Research Partnerships:
+- Collaboration with IIT Bangalore on multilingual NLP
+- Joint research with IIIT Hyderabad on document understanding
+- Partnership with Microsoft Research India on responsible AI
+
+
+ACME CORPORATION ACHIEVEMENTS (2024)
+------------------------------------
+
+Awards and Recognition:
+- Best AI Startup 2024 - TechCrunch India
+- Top 10 SaaS Companies in India - ET Startup Awards
+- Innovation in Document Automation - NASSCOM AI Summit
+
+Funding:
+- Series A: $10 million (May 2024) led by Sequoia Capital India
+- Series B: $25 million (November 2024) led by Accel Partners
+
+Growth Metrics:
+- Revenue Growth: 300% year-over-year
+- Customer Acquisition: 15,000+ businesses
+- Team Expansion: Grew from 120 to 450 employees
+- Geographic Expansion: From 1 city (Bangalore) to 15 cities across India
+
+Media Coverage:
+- Featured in Forbes India 30 Under 30
+- YourStory: "How ACME is Transforming Document Processing in India"
+- Economic Times: "Indian AI Startup Challenges Global Giants"
+
+
+END OF DOCUMENT
+Last Updated: January 15, 2025
+Version: 1.3
+Confidentiality: Internal Use Only
